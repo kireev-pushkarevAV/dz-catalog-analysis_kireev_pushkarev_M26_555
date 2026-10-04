@@ -135,19 +135,19 @@ def decade_label(year):
 
 # Этап 3. Циклы
 
-for movie in movies:
-    if "comedy" in movie["genres"]:
-        continue
-    print(movie["title"])
+# for movie in movies:
+#     if "comedy" in movie["genres"]:
+#         continue
+#     print(movie["title"])
 
-i = 0
-while i < len(movies):
-    if movies[i]["rating"] > 9.0:
-        print(movies[i]["title"])
-        break
-    i += 1
-else:
-    print("Шедевров не найдено")
+# i = 0
+# while i < len(movies):
+#     if movies[i]["rating"] > 9.0:
+#         print(movies[i]["title"])
+#         break
+#     i += 1
+# else:
+#     print("Шедевров не найдено")
 
 
 def count_long_movies(movies, threshold=120):
@@ -248,8 +248,8 @@ def iter_high_rated(movies, min_rating=8.0):
             yield movie
 
 
-for movie in iter_high_rated(movies):
-    print(format_report_line(movie))
+# for movie in iter_high_rated(movies):
+#     print(format_report_line(movie))
 
 total_duration_high_rated = sum(
     m["duration_min"] for m in movies if m["rating"] > 7
@@ -259,7 +259,6 @@ total_duration_high_rated = sum(
 
 
 def build_report(movies):
-    print("ОТЧЕТ ПО КАТАЛОГУ")
     print(f"Средний рейтинг: {average_rating(movies)}")
 
     stats = catalog_age_stats(movies)
@@ -267,7 +266,7 @@ def build_report(movies):
 
     print("\nТоп-3 фильма:")
     top_3 = top_n_by_rating(movies, 3)
-    for title, rating in top_3:
+    for title, _ in top_3:
         for movie in movies:
             if movie["title"] == title:
                 print(f"  {format_report_line(movie)}")
@@ -275,11 +274,15 @@ def build_report(movies):
 
     print("\nФильмов по жанрам:")
     genre_counts = count_by_genre(movies)
-    for genre, count in sorted(genre_counts.items()):
+    sorted_genres = sorted(
+        genre_counts.items(), key=lambda item: item[1], reverse=True
+    )
+    for genre, count in sorted_genres:
         print(f"  {genre} — {count}")
 
     genres_list = sorted(list(all_genres(movies)))
     print(f"\nВсе жанры каталога: {', '.join(genres_list)}")
+
 
 if __name__ == "__main__":
     build_report(movies)
