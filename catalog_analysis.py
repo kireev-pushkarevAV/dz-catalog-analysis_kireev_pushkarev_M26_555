@@ -223,3 +223,20 @@ high_rated_movies = {
     for movie in movies
     if movie["rating"] > avg_rating
 }
+
+# Этап 7. Множества
+
+
+def all_genres(movies):
+    unique_genres = set()
+    for movie in movies:
+        unique_genres.update(movie["genres"])
+    return unique_genres
+
+
+def common_actors(movie1, movie2):
+    return set(movie1["cast"]) & set(movie2["cast"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    return all_genres(movies_a) - all_genres(movies_b)
