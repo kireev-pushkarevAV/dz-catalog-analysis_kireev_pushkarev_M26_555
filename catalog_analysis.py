@@ -173,11 +173,12 @@ def make_slug(title):
 
 
 def format_report_line(movie):
-    hours, minutes = duration_in_hours(movie["duration_min"])
+    # duration_in_hours уже возвращает готовую строку вида "1ч 58м"
+    duration_str = duration_in_hours(movie["duration_min"])
     genres_str = ", ".join(sorted(movie["genres"]))
     return (
         f'"{movie["title"]}" ({movie["year"]}) — '
-        f'{movie["rating"]}/10, {hours}ч {minutes}м, жанры: {genres_str}'
+        f'{movie["rating"]}/10, {duration_str}, жанры: {genres_str}'
     )
 
 # Этап 5. Списки
@@ -280,5 +281,5 @@ def build_report(movies):
     genres_list = sorted(list(all_genres(movies)))
     print(f"\nВсе жанры каталога: {', '.join(genres_list)}")
 
-
-build_report(movies)
+if __name__ == "__main__":
+    build_report(movies)
